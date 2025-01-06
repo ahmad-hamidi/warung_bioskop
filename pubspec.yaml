@@ -1,12 +1,17 @@
 name: warung_bioskop
 description: "Warung Bioskop is provide movie list and ticketing simulation"
 
-version: 1.0.0+1
+version: 1.32.1+1
 
 environment:
   sdk: ^3.5.3
 
 dependencies:
+  firebase_auth: ^5.3.4
+  firebase_core: ^3.9.0
+  firebase_storage: ^12.3.7
+  cloud_firestore: ^5.6.0
+
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
