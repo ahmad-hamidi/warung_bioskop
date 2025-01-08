@@ -13,7 +13,7 @@ abstract interface class UserRepository {
       int balance = 0,
   });
 
-  Future<Result<User>> getUser({
+  Future<Result<User>>? getUser({
       required String uid,
   });
 
