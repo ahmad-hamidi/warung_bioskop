@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:warung_bioskop/data/repositories/movie_repository.dart';
+import 'package:warung_bioskop/domain/entities/actor.dart';
 import 'package:warung_bioskop/domain/entities/movie.dart';
 import 'package:warung_bioskop/domain/entities/movie_detail.dart';
 import 'package:warung_bioskop/domain/entities/result.dart';
@@ -19,15 +20,37 @@ class TmdbRepository implements MovieRepository {
   TmdbRepository({Dio? d}) : dio = d ?? Dio();
 
   @override
-  Future<Result<MovieDetail>> getActors({required int id}) {
-    // TODO: implement getActors
-    throw UnimplementedError();
+  Future<Result<List<Actor>>> getActors({required int id}) async {
+    try {
+      final response = await dio?.get(
+          'https://api.themoviedb.org/3/movie/$id/credits',
+          options: options);
+
+      if (response?.statusCode == 200) {
+        final list = List<Map<String, dynamic>>.from(response!.data['cast']);
+        return Result.success(list.map((e) => Actor.fromJSON(e)).toList());
+      } else {
+        return const Result.failed('Failed GET Movie');
+      }
+    } on DioException catch (e) {
+      return Result.failed('${e.message}');
+    }
   }
 
   @override
-  Future<Result<MovieDetail>> getDetail({required int id}) {
-    // TODO: implement getDetail
-    throw UnimplementedError();
+  Future<Result<MovieDetail>> getDetail({required int id}) async {
+    try {
+      final response = await dio?.get('https://api.themoviedb.org/3/movie/$id',
+          options: options);
+
+      if (response?.statusCode == 200) {
+        return Result.success(MovieDetail.fromJSON(response!.data));
+      } else {
+        return const Result.failed('Failed GET Detail');
+      }
+    } on DioException catch (e) {
+      return Result.failed('${e.message}');
+    }
   }
 
   @override
