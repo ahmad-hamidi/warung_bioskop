@@ -4,11 +4,12 @@ import 'package:warung_bioskop/domain/entities/result.dart';
 import 'package:warung_bioskop/domain/usecases/get_movie_detail/get_movie_detail_params.dart';
 import 'package:warung_bioskop/domain/usecases/usecase.dart';
 
-class GetMovieDetail
+class GetMovieDetailUsecase
     implements UseCase<Result<MovieDetail>, GetMovieDetailParams> {
   final MovieRepository movieRepository;
 
-  GetMovieDetail({required MovieRepository repo}) : movieRepository = repo;
+  GetMovieDetailUsecase({required MovieRepository repo})
+      : movieRepository = repo;
 
   @override
   Future<Result<MovieDetail>> call(GetMovieDetailParams params) async {
