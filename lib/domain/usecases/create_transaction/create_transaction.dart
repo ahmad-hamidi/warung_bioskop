@@ -15,8 +15,11 @@ class CreateTransaction
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     final result = await transactionRepository.createTransaction(
       transaction: params.transaction.copyWith(
-          transactionTime: currentTime,
-          id: 'flx-$currentTime-${params.transaction.uid}'),
+        transactionTime: currentTime,
+        id: (params.transaction.id == null)
+            ? 'flx-$currentTime-${params.transaction.uid}'
+            : params.transaction.id,
+      ),
     );
 
     if (result.isSuccess) {
