@@ -6,6 +6,7 @@ import 'package:warung_bioskop/presentation/providers/repositories/movie_reposit
 part 'get_movie_detail_provider.g.dart';
 
 @riverpod
-GetMovieDetail getMovieDetail(GetMovieDetailRef ref) => GetMovieDetail(
+GetMovieDetailUsecase getMovieDetail(GetMovieDetailRef ref) =>
+    GetMovieDetailUsecase(
       repo: ref.watch(movieRepositoryProvider),
     );
