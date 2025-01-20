@@ -21,6 +21,7 @@ import 'package:warung_bioskop/presentation/providers/usecases/logout_provider.d
 import 'package:warung_bioskop/presentation/providers/usecases/register_provider.dart';
 import 'package:warung_bioskop/presentation/providers/usecases/topup_provider.dart';
 import 'package:warung_bioskop/presentation/providers/usecases/upload_profile_picture_provider.dart';
+import 'package:warung_bioskop/presentation/providers/user_data/transaction_data_provider.dart';
 
 part 'user_data_provider.g.dart';
 
@@ -111,7 +112,7 @@ class UserData extends _$UserData {
 
       if (result.isSuccess) {
         refreshUserData();
-        // TODO: refresh transaction date
+        ref.read(transactionDataProvider.notifier).refreshTransactionData();
       }
     }
   }

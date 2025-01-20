@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:warung_bioskop/domain/entities/user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:warung_bioskop/presentation/providers/repositories/authentication/authentication_provider.dart';
+import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
-class MainPage extends StatelessWidget {
-  final User user;
+import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
 
-  const MainPage({super.key, required this.user});
+class MainPage extends ConsumerStatefulWidget {
+  const MainPage({super.key});
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _MainPageState();
+}
+
+class _MainPageState extends ConsumerState<MainPage> {
+  @override
   Widget build(BuildContext context) {
+    ref.listen(userDataProvider, (previous, next) {
+      if (previous != null && next is AsyncData && next.value == null) {
+        ref.read(routerProvider).goNamed('login');
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Main Page"),
       ),
       body: Center(
-        child: Text("data login ${user.toString()}"),
+        child: Column(
+          children: [
+            Text(
+              "data login ${ref.watch(userDataProvider).when(
+                    data: (data) => data.toString(),
+                    error: (error, stackTrace) => '',
+                    loading: () => 'Loading',
+                  )}",
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  ref.read(userDataProvider.notifier).logout();
+                },
+                child: const Text('Logout'))
+          ],
+        ),
       ),
     );
   }
