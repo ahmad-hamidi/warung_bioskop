@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:warung_bioskop/presentation/misc/constants.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'firebase_options.dart';
 
@@ -22,6 +23,20 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: saffron,
+          onSurface: backgroundColor,
+          //background: backgroundColor,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+        textTheme: TextTheme(
+          bodyMedium: GoogleFonts.poppins(color: ghostWhite),
+          bodyLarge: GoogleFonts.poppins(color: ghostWhite),
+          labelLarge: GoogleFonts.poppins(color: ghostWhite),
+        ),
+      ),
       routeInformationParser: ref.watch(routerProvider).routeInformationParser,
       routeInformationProvider:
           ref.watch(routerProvider).routeInformationProvider,

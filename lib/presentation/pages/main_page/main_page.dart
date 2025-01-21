@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:warung_bioskop/presentation/providers/repositories/authentication/authentication_provider.dart';
+import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
+import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
@@ -18,6 +19,8 @@ class _MainPageState extends ConsumerState<MainPage> {
     ref.listen(userDataProvider, (previous, next) {
       if (previous != null && next is AsyncData && next.value == null) {
         ref.read(routerProvider).goNamed('login');
+      } else if (next is AsyncError) {
+        context.showSnackBar(next.error.toString());
       }
     });
 
