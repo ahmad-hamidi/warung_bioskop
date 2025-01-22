@@ -44,3 +44,4 @@ flutter:
 
   assets:
     - .env # path to your .env
+    - assets/

@@ -17,9 +17,14 @@ Future<MovieDetail?> movieDetail(MovieDetailRef ref,
     GetMovieDetailParams(movie: movie),
   );
 
-  if (result.isSuccess) {
-    return result.resultValue;
-  } else {
-    Result.failed(result.errorMessage ?? 'Failed to Get Movie Detail');
-  }
+  // if (result.isSuccess) {
+  //   return result.resultValue;
+  // } else {
+  //   Result.failed(result.errorMessage ?? 'Failed to Get Movie Detail');
+  // }
+
+  return switch (result) {
+    Success(value: final movieDetail) => movieDetail,
+    Failed(message: _) => null
+  };
 }
