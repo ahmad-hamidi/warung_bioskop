@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:warung_bioskop/domain/entities/user.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
 import 'package:warung_bioskop/presentation/widgets/bioskop_text_field.dart';
 
-// Provider untuk TextEditingController
 final emailControllerProvider = Provider((ref) => TextEditingController());
 final passwordControllerProvider = Provider((ref) => TextEditingController());
 
@@ -17,9 +16,10 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(userDataProvider, (previous, next) {
+      debugPrint('login page next: $next previous: $previous');
       if (next is AsyncData) {
         if (next.value != null) {
-          ref.read(routerProvider).goNamed('main');
+          ref.read(routerProvider).goNamed(RouterName.main);
         }
       } else if (next is AsyncError) {
         context.showSnackBar(next.error.toString());
@@ -32,7 +32,7 @@ class LoginPage extends ConsumerWidget {
     return Scaffold(
       body: ListView(
         children: [
-          verticalSpace(100),
+          verticalSpace(50),
           Center(
             child: Image.asset(
               'assets/bioskop.png',
@@ -119,7 +119,9 @@ class LoginPage extends ConsumerWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(routerProvider).pushNamed(RouterName.register);
+                    },
                     child: const Text(
                       'Buat disini',
                       style: TextStyle(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:warung_bioskop/data/repositories/user_repository.dart';
 import 'package:warung_bioskop/domain/entities/result.dart';
@@ -20,7 +21,9 @@ class FirebaseUserRepository implements UserRepository {
       required String name,
       String? photoUrl,
       int balance = 0}) async {
+    debugPrint("Y1");
     final users = firebaseFirestore.collection('users');
+    debugPrint("Y2");
     await users.doc(uid).set({
       'uid': uid,
       'email': email,
@@ -28,18 +31,21 @@ class FirebaseUserRepository implements UserRepository {
       'photoUrl': photoUrl,
       'balance': balance,
     });
-
-    final user = await firebaseFirestore.doc('user/$uid').get();
+    debugPrint("Y3 $uid");
+    //final user = await users.doc(uid).get();
+    final user = await firebaseFirestore.doc('users/$uid').get();
     if (user.exists == true) {
+      debugPrint("Y4");
       return Result.success(User.fromJson(user.data()!));
     } else {
+      debugPrint("Y5");
       return const Result.failed('Failed insert the new user');
     }
   }
 
   @override
   Future<Result<User>>? getUser({required String uid}) async {
-    final store = firebaseFirestore.doc("user/$uid");
+    final store = firebaseFirestore.doc("users/$uid");
     final doc = await store.get();
     if (doc.exists == true) {
       return Result.success(User.fromJson(doc.data()!));
@@ -50,7 +56,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<Result<int>> getUserBalance({required String uid}) async {
-    final doc = firebaseFirestore.doc('user/$uid');
+    final doc = firebaseFirestore.doc('users/$uid');
     final result = await doc.get();
 
     if (result.exists) {
@@ -63,7 +69,7 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Future<Result<User>> updateUser({required User user}) async {
     try {
-      final doc = firebaseFirestore.doc('user/${user.uid}');
+      final doc = firebaseFirestore.doc('users/${user.uid}');
       await doc.update(user.toJson());
 
       final result = await doc.get();
@@ -86,7 +92,7 @@ class FirebaseUserRepository implements UserRepository {
   Future<Result<User>> updateUserBalance(
       {required String uid, required int balance}) async {
     try {
-      final doc = firebaseFirestore.doc('user/$uid');
+      final doc = firebaseFirestore.doc('users/$uid');
 
       final result = await doc.get();
 

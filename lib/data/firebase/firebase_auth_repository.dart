@@ -43,11 +43,14 @@ class FirebaseAuthRepository implements AuthRepository {
       final result = await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       if (result.user?.uid != null) {
+        debugPrint('x1');
         return Result.success(result.user!.uid);
       } else {
+        debugPrint('x2');
         return const Result.success('Failed create new user');
       }
     } on FirebaseAuthException catch (e) {
+      debugPrint('x3');
       return Result.failed('${e.message}');
     }
   }

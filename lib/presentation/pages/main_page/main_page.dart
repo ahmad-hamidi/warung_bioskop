@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
-import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
