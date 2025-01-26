@@ -18,21 +18,17 @@ class RegisterUsecase implements UseCase<Result<User>, RegisterParams> {
   Future<Result<User>> call(RegisterParams params) async {
     final uidResult = await authRepository.register(
         email: params.email, password: params.password);
-    debugPrint('x5');
+
     if (uidResult.isSuccess) {
       final result = await userRepository.createUser(
           uid: uidResult.resultValue!, email: params.email, name: params.name);
 
-      debugPrint('cek1');
       if (result.isSuccess) {
-        debugPrint('cek2');
         return Result.success(result.resultValue!);
       } else {
-        debugPrint('cek3');
         return Result.failed(result.errorMessage!);
       }
     } else {
-      debugPrint('cek4');
       return Result.failed(uidResult.errorMessage!);
     }
   }

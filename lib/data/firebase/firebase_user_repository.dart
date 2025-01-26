@@ -21,9 +21,7 @@ class FirebaseUserRepository implements UserRepository {
       required String name,
       String? photoUrl,
       int balance = 0}) async {
-    debugPrint("Y1");
     final users = firebaseFirestore.collection('users');
-    debugPrint("Y2");
     await users.doc(uid).set({
       'uid': uid,
       'email': email,
@@ -31,14 +29,11 @@ class FirebaseUserRepository implements UserRepository {
       'photoUrl': photoUrl,
       'balance': balance,
     });
-    debugPrint("Y3 $uid");
     //final user = await users.doc(uid).get();
     final user = await firebaseFirestore.doc('users/$uid').get();
     if (user.exists == true) {
-      debugPrint("Y4");
       return Result.success(User.fromJson(user.data()!));
     } else {
-      debugPrint("Y5");
       return const Result.failed('Failed insert the new user');
     }
   }
