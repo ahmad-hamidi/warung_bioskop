@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
-
-Widget profileInfo(WidgetRef ref) {
-  final url = ref.watch(userDataProvider).valueOrNull?.photoUrl;
-
+Widget profileInfo(
+  String? url, {
+  double width = 100,
+  double height = 100,
+}) {
   final imageProvider = (url?.isNotEmpty == true)
       ? NetworkImage(url!) as ImageProvider
       : const AssetImage(
@@ -13,8 +12,8 @@ Widget profileInfo(WidgetRef ref) {
         );
 
   return Container(
-    width: 100,
-    height: 100,
+    width: width,
+    height: height,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       border: Border.all(color: Colors.grey, width: 1),

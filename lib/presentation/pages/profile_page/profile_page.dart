@@ -13,52 +13,60 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userModel = ref.watch(userDataProvider).valueOrNull;
 
-    return ListView(
-      children: [
-        profileInfo(ref),
-        verticalSpace(16),
-        Text(
-          textAlign: TextAlign.center,
-          userModel?.name ?? '-',
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+      ),
+      child: ListView(
+        children: [
+          verticalSpace(32),
+          profileInfo(userModel?.photoUrl),
+          verticalSpace(16),
+          Text(
+            textAlign: TextAlign.center,
+            userModel?.name ?? '-',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        verticalSpace(8),
-        Text(
-          userModel?.email ?? '-',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
+          verticalSpace(8),
+          Text(
+            userModel?.email ?? '-',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+            ),
           ),
-        ),
-        verticalSpace(32),
-        profileItem('Update Profile', () {}),
-        verticalSpace(16),
-        profileItem('My Wallet', () {}),
-        verticalSpace(16),
-        profileItem('Change Password', () {}),
-        verticalSpace(16),
-        profileItem('Change Language', () {}),
-        verticalSpace(16),
-        profileItem('Contact Us', () {}),
-        verticalSpace(16),
-        profileItem('Privacy Policy', () {}),
-        verticalSpace(16),
-        profileItem('Term and Conditions', () {}),
-        verticalSpace(32),
-        Container(
-          margin: const EdgeInsets.only(left: 16, right: 16),
-          child: ElevatedButton(
+          verticalSpace(16),
+          const Divider(),
+          verticalSpace(16),
+          profileItem('Update Profile', () {}),
+          verticalSpace(16),
+          profileItem('My Wallet', () {}),
+          verticalSpace(16),
+          profileItem('Change Password', () {}),
+          verticalSpace(16),
+          profileItem('Change Language', () {}),
+          verticalSpace(16),
+          const Divider(),
+          verticalSpace(16),
+          profileItem('Contact Us', () {}),
+          verticalSpace(16),
+          profileItem('Privacy Policy', () {}),
+          verticalSpace(16),
+          profileItem('Term and Conditions', () {}),
+          verticalSpace(32),
+          ElevatedButton(
             onPressed: () {
               ref.read(userDataProvider.notifier).logout();
             },
             child: const Text('Logout'),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

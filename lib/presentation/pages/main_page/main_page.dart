@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
+import 'package:warung_bioskop/presentation/pages/movie_page/movie_page.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
@@ -30,9 +31,6 @@ class _MainPageState extends ConsumerState<MainPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Main Page"),
-      ),
       body: Stack(
         children: [
           PageView(
@@ -44,7 +42,7 @@ class _MainPageState extends ConsumerState<MainPage> {
             },
             children: [
               Center(
-                child: Text('page 1'),
+                child: MoviePage(),
               ),
               Center(
                 child: Text('page 2'),
