@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:warung_bioskop/presentation/widgets/bottom_nav_bar_item.dart';
 
 class BottomNavBar extends StatelessWidget {
   final List<BottomNavBarItem> items;
   final int selectedIndex;
   final void Function(int index) onTap;
+  static double HEIGHT = 70;
 
   const BottomNavBar(
       {super.key,
@@ -19,7 +19,7 @@ class BottomNavBar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
-        height: 70,
+        height: HEIGHT,
         padding: const EdgeInsets.only(top: 16),
         decoration: const BoxDecoration(
           boxShadow: [

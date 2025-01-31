@@ -33,11 +33,43 @@ class NetworkImageCard extends StatelessWidget {
             if (imageUrl?.isNotEmpty == true)
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    image: DecorationImage(
-                      image: NetworkImage(imageUrl!),
-                      fit: fit,
-                    )),
+                  borderRadius: BorderRadius.circular(borderRadius),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  child: Image.network(
+                    imageUrl!,
+                    fit: fit,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return Stack(
+                          children: [
+                            if (loadingProgress == null) child,
+                          ],
+                        ); // Image fully loaded
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    (loadingProgress.expectedTotalBytes ?? 1)
+                                : null,
+                          ),
+                        ); // Show loading indicator
+                      }
+                    },
+                    errorBuilder: (BuildContext context, Object error,
+                        StackTrace? stackTrace) {
+                      debugPrint('stackTrace $stackTrace');
+                      debugPrint('error $error');
+                      return const Center(
+                        child: Icon(Icons.error,
+                            color: Colors.red), // Fallback on error
+                      );
+                    },
+                  ),
+                ),
               )
             else
               const Center(

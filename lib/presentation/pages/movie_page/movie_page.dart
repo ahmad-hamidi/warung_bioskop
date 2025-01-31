@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/movie_list.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/promotion_list.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/search_bar.dart';
@@ -24,7 +25,9 @@ class MoviePage extends ConsumerWidget {
     return ListView(
       children: [
         userInfo(userModel),
+        verticalSpace(20),
         searchBar(context),
+        verticalSpace(20),
         ...movieList(
           title: 'Now Playing',
           movies: ref.watch(nowPlayingProviderProvider),
@@ -33,7 +36,8 @@ class MoviePage extends ConsumerWidget {
           },
         ),
         ...promotionList(promotionImages),
-        ...movieList(
+        verticalSpace(20),
+        ...movieList2(
           title: 'Upcoming',
           movies: ref.watch(upcomingProviderProvider),
           onTap: (item) {

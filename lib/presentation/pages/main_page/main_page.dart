@@ -33,24 +33,27 @@ class _MainPageState extends ConsumerState<MainPage> {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: pageController,
-            onPageChanged: (index) {
-              setState(() {
-                selectedPage = index;
-              });
-            },
-            children: [
-              Center(
-                child: MoviePage(),
-              ),
-              Center(
-                child: Text('page 2'),
-              ),
-              Center(
-                child: ProfilePage(),
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.only(bottom: BottomNavBar.HEIGHT + 5),
+            child: PageView(
+              controller: pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  selectedPage = index;
+                });
+              },
+              children: [
+                Center(
+                  child: MoviePage(),
+                ),
+                Center(
+                  child: Text('page 2'),
+                ),
+                Center(
+                  child: ProfilePage(),
+                ),
+              ],
+            ),
           ),
           BottomNavBar(
             items: [
@@ -91,24 +94,3 @@ class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 }
-
-
-// Center(
-//             child: Column(
-//               children: [
-//                 Text(
-//                   "data login ${ref.watch(userDataProvider).when(
-//                         data: (data) => data.toString(),
-//                         error: (error, stackTrace) => '',
-//                         loading: () => 'Loading',
-//                       )}",
-//                 ),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     ref.read(userDataProvider.notifier).logout();
-//                   },
-//                   child: const Text('Logout'),
-//                 ),
-//               ],
-//             ),
-//           ),
