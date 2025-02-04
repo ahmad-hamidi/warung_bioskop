@@ -33,27 +33,24 @@ class _MainPageState extends ConsumerState<MainPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: BottomNavBar.HEIGHT + 5),
-            child: PageView(
-              controller: pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  selectedPage = index;
-                });
-              },
-              children: [
-                Center(
-                  child: MoviePage(),
-                ),
-                Center(
-                  child: Text('page 2'),
-                ),
-                Center(
-                  child: ProfilePage(),
-                ),
-              ],
-            ),
+          PageView(
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                selectedPage = index;
+              });
+            },
+            children: [
+              Center(
+                child: MoviePage(),
+              ),
+              Center(
+                child: Text('page 2'),
+              ),
+              Center(
+                child: ProfilePage(),
+              ),
+            ],
           ),
           BottomNavBar(
             items: [

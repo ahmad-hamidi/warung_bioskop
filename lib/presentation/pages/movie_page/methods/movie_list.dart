@@ -27,16 +27,14 @@ List<Widget> movieList({
           runSpacing: 8,
           children: movies.value!
               .map(
-                (movie) => SizedBox(
-                  child: AutoSizeNetworkImageCard(
-                    borderRadius: 8,
-                    fit: BoxFit.cover,
-                    clickCallback: () {
-                      debugPrint('movie ${movie.posterPath}');
-                      onTap?.call(movie);
-                    },
-                    imageUrl: tmdbImageSizeW92Url + movie.posterPath!,
-                  ),
+                (movie) => AutoSizeNetworkImageCard(
+                  borderRadius: 8,
+                  fit: BoxFit.cover,
+                  clickCallback: () {
+                    debugPrint('movie ${movie.posterPath}');
+                    onTap?.call(movie);
+                  },
+                  imageUrl: tmdbImageSizeW92Url + movie.posterPath!,
                 ),
               )
               .toList(),

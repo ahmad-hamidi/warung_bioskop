@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/movie_list.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/promotion_list.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/search_bar.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/methods/user_info.dart';
 import 'package:warung_bioskop/presentation/providers/movie/now_playing_provider.dart';
 import 'package:warung_bioskop/presentation/providers/movie/upcoming_provider.dart';
+import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
 
 class MoviePage extends ConsumerWidget {
@@ -32,7 +34,7 @@ class MoviePage extends ConsumerWidget {
           title: 'Now Playing',
           movies: ref.watch(nowPlayingProviderProvider),
           onTap: (item) {
-            // go to movie detail
+            ref.read(routerProvider).pushNamed(RouterName.detail, extra: item);
           },
         ),
         ...promotionList(promotionImages),
@@ -41,9 +43,10 @@ class MoviePage extends ConsumerWidget {
           title: 'Upcoming',
           movies: ref.watch(upcomingProviderProvider),
           onTap: (item) {
-            // go to movie detail
+            ref.read(routerProvider).pushNamed(RouterName.detail, extra: item);
           },
         ),
+        verticalSpace(100),
       ],
     );
   }
