@@ -22,12 +22,9 @@ class NetworkImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: clickCallback,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
-        decoration: const BoxDecoration(
-          color: Colors.black54,
-        ),
         child: Stack(
           children: [
             if (imageUrl?.isNotEmpty == true)

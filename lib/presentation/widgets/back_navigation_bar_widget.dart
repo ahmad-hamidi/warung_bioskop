@@ -22,12 +22,13 @@ class BackNavigationBarWidget extends StatelessWidget {
             child: Icon(Icons.arrow_back),
           ),
         ),
-        horizontalSpace(16),
+        horizontalSpace(10),
         SizedBox(
           width: MediaQuery.of(context).size.width - 60 - 48,
-          height: 40,
+          height: 25,
           child: Text(
             title,
+            textAlign: TextAlign.start,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

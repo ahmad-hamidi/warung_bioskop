@@ -4,6 +4,9 @@ import 'package:warung_bioskop/domain/entities/movie.dart';
 import 'package:warung_bioskop/presentation/misc/constants.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/pages/detail_page/methods/background.dart';
+import 'package:warung_bioskop/presentation/pages/detail_page/methods/cast_and_crew.dart';
+import 'package:warung_bioskop/presentation/pages/detail_page/methods/movie_overview.dart';
+import 'package:warung_bioskop/presentation/pages/detail_page/methods/movie_short_info.dart';
 import 'package:warung_bioskop/presentation/providers/movie/movie_detail_provider.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/widgets/back_navigation_bar_widget.dart';
@@ -33,32 +36,43 @@ class DetailPage extends ConsumerWidget {
           ...background(movieEntity),
           ListView(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BackNavigationBarWidget(
-                    title: movieEntity.title,
-                    clickListener: () {
-                      ref.read(routerProvider).pop();
-                    },
-                  ),
-                  verticalSpace(24),
-                  //backdrop image
-                  NetworkImageCard(
-                    width: MediaQuery.of(context).size.width - 48,
-                    height: (MediaQuery.of(context).size.width - 48) * 0.6,
-                    borderRadius: 15,
-                    imageUrl: url,
-                    fit: BoxFit.cover,
-                  ),
-                  verticalSpace(24),
-                  //...movieShortInfo(),
-                  verticalSpace(24),
-                  //...movieOverView(),
-                  verticalSpace(40),
-                ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BackNavigationBarWidget(
+                      title: movieEntity.title,
+                      clickListener: () {
+                        ref.read(routerProvider).pop();
+                      },
+                    ),
+                    verticalSpace(24),
+                    //backdrop image
+                    NetworkImageCard(
+                      width: MediaQuery.of(context).size.width - 48,
+                      height: (MediaQuery.of(context).size.width - 48) * 0.6,
+                      borderRadius: 25,
+                      imageUrl: url,
+                      fit: BoxFit.cover,
+                    ),
+                    verticalSpace(24),
+                    ...movieShortInfo(
+                      asyncMovieDetail: asyncMovieDetail,
+                      context: context,
+                    ),
+                    verticalSpace(24),
+                    ...movieOverView(
+                      asyncMovieDetail: asyncMovieDetail,
+                    ),
+                    verticalSpace(40),
+                  ],
+                ),
               ),
-              // ...costAndCrew(),
+              ...castAndCrew(
+                asyncMovieDetail: asyncMovieDetail,
+                ref: ref,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 40,
