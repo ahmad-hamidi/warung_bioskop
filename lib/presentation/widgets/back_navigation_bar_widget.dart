@@ -16,9 +16,7 @@ class BackNavigationBarWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: clickListener,
-          child: SizedBox(
-            width: 40,
-            height: 40,
+          child: const SizedBox(
             child: Icon(Icons.arrow_back),
           ),
         ),

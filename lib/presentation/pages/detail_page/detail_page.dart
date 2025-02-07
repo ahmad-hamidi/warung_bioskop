@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/domain/entities/movie.dart';
+import 'package:warung_bioskop/domain/entities/movie_detail.dart';
 import 'package:warung_bioskop/presentation/misc/constants.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/detail_page/methods/background.dart';
 import 'package:warung_bioskop/presentation/pages/detail_page/methods/cast_and_crew.dart';
 import 'package:warung_bioskop/presentation/pages/detail_page/methods/movie_overview.dart';
@@ -22,7 +24,7 @@ class DetailPage extends ConsumerWidget {
       MovieDetailProvider(movie: movieEntity),
     );
 
-    final model = asyncMovieDetail.valueOrNull;
+    final MovieDetail? model = asyncMovieDetail.valueOrNull;
 
     var url = '';
     if (model != null) {
@@ -79,7 +81,9 @@ class DetailPage extends ConsumerWidget {
                   horizontal: 24,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    onBookingProcess(ref);
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: backgroundColor,
                     backgroundColor: saffron,
@@ -100,5 +104,15 @@ class DetailPage extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void onBookingProcess(WidgetRef ref) {
+    final MovieDetail? model = ref
+        .watch(
+          MovieDetailProvider(movie: movieEntity),
+        )
+        .valueOrNull;
+
+    ref.read(routerProvider).pushNamed(RouterName.timeBooking, extra: model);
   }
 }
