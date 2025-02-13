@@ -3,11 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:warung_bioskop/domain/entities/movie.dart';
 import 'package:warung_bioskop/domain/entities/movie_detail.dart';
+import 'package:warung_bioskop/domain/entities/transaction.dart';
 import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/detail_page/detail_page.dart';
 import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
 import 'package:warung_bioskop/presentation/pages/main_page/main_page.dart';
 import 'package:warung_bioskop/presentation/pages/register_page/register_page.dart';
+import 'package:warung_bioskop/presentation/pages/seat_booking_page/seat_booking_page.dart';
 import 'package:warung_bioskop/presentation/pages/time_booking_page/time_booking_page.dart';
 
 part 'router_provider.g.dart';
@@ -42,6 +44,13 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
           name: RouterName.timeBooking,
           builder: (context, state) =>
               TimeBookingPage(state.extra as MovieDetail),
+        ),
+        GoRoute(
+          path: '/${RouterName.seatBooking}',
+          name: RouterName.seatBooking,
+          builder: (context, state) => SeatBookingPage(
+            transactionDetail: state.extra as (MovieDetail, Transaction),
+          ),
         ),
       ],
       initialLocation: '/${RouterName.login}',
