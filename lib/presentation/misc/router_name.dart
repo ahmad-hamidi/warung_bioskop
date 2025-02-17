@@ -5,4 +5,5 @@ class RouterName {
   static const String detail = "detail";
   static const String timeBooking = "time-booking";
   static const String seatBooking = "seat-booking";
+  static const String bookingConfirmation = "booking-confirmation";
 }

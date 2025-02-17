@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/domain/entities/movie_detail.dart';
 import 'package:warung_bioskop/domain/entities/transaction.dart';
+import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
 import 'package:warung_bioskop/presentation/misc/constants.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
+import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
 import 'package:warung_bioskop/presentation/pages/seat_booking_page/methods/legend.dart';
 import 'package:warung_bioskop/presentation/pages/seat_booking_page/methods/movie_screen.dart';
 import 'package:warung_bioskop/presentation/pages/seat_booking_page/methods/seat_section.dart';
@@ -92,7 +95,9 @@ class _SeatBookingPageState extends ConsumerState<SeatBookingPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      onProcessBooking();
+                    },
                     child: const Text('Next',
                         style: TextStyle(
                           color: Colors.black,
@@ -126,5 +131,26 @@ class _SeatBookingPageState extends ConsumerState<SeatBookingPage> {
         : selectedSeats.contains(seatNumber)
             ? SeatStatus.selected
             : SeatStatus.available;
+  }
+
+  void onProcessBooking() {
+    if (selectedSeats.isEmpty) {
+      context.showSnackBar('Please select at least one seat');
+      return;
+    }
+
+    final updatedTransaction = widget.transactionDetail.$2.copyWith(
+      seats: (selectedSeats..sort()).map((e) => '$e').toList(),
+      ticketAmount: selectedSeats.length,
+      ticketPrice: 25000,
+    );
+
+    ref.read(routerProvider).pushNamed(
+      RouterName.bookingConfirmation,
+      extra: (
+        widget.transactionDetail.$1,
+        updatedTransaction,
+      ),
+    );
   }
 }
