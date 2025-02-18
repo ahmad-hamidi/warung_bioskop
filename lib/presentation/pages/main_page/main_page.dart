@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/movie_page.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_page.dart';
+import 'package:warung_bioskop/presentation/pages/ticket_page/ticket_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
@@ -45,7 +46,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                 child: MoviePage(),
               ),
               Center(
-                child: Text('page 2'),
+                child: TicketPage(),
               ),
               Center(
                 child: ProfilePage(),
