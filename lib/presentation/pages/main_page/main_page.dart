@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/movie_page/movie_page.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_page.dart';
 import 'package:warung_bioskop/presentation/pages/ticket_page/ticket_page.dart';
+import 'package:warung_bioskop/presentation/providers/redirection_ticket_page/redirection_ticket_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
@@ -18,16 +20,26 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MainPageState extends ConsumerState<MainPage> {
-  final PageController pageController = PageController();
+  PageController pageController = PageController();
   int selectedPage = 0;
 
   @override
   Widget build(BuildContext context) {
     ref.listen(userDataProvider, (previous, next) {
       if (previous != null && next is AsyncData && next.value == null) {
-        ref.read(routerProvider).goNamed('login');
+        ref.read(routerProvider).goNamed(RouterName.main);
       } else if (next is AsyncError) {
         context.showSnackBar(next.error.toString());
+      }
+    });
+
+    ref.listen(redirectionTicketPageProvider, (previous, next) {
+      if (next is AsyncData && next.value == true) {
+        pageController.animateToPage(
+          1,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInBack,
+        );
       }
     });
 
@@ -41,7 +53,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                 selectedPage = index;
               });
             },
-            children: [
+            children: const [
               Center(
                 child: MoviePage(),
               ),
@@ -77,7 +89,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                 selectedImage: 'assets/profile-selected.png',
               ),
             ],
-            selectedIndex: 0,
+            selectedIndex: selectedPage,
             onTap: (index) {
               selectedPage = index;
               pageController.animateToPage(

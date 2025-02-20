@@ -12,6 +12,7 @@ import 'package:warung_bioskop/presentation/misc/constants.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/booking_confirmation_page/methods/transaction_row_widget.dart';
+import 'package:warung_bioskop/presentation/providers/redirection_ticket_page/redirection_ticket_page.dart';
 import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/providers/usecases/create_transaction_provider.dart';
 import 'package:warung_bioskop/presentation/providers/user_data/transaction_data_provider.dart';
@@ -184,6 +185,7 @@ class BookingConfirmationPage extends ConsumerWidget {
               .refreshTransactionData();
           await ref.read(userDataProvider.notifier).refreshUserData();
           ref.read(routerProvider).goNamed(RouterName.main);
+          ref.read(redirectionTicketPageProvider.notifier).openPage();
         case Failed(:final message):
           {
             if (!context.mounted) {

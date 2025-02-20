@@ -12,32 +12,38 @@ List<Widget> movieList({
   void Function(Movie movie)? onTap,
 }) =>
     [
-      Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
+      Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
       ),
       verticalSpace(20),
       if (movies.value != null)
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: movies.value!
-              .map(
-                (movie) => AutoSizeNetworkImageCard(
-                  borderRadius: 8,
-                  fit: BoxFit.cover,
-                  clickCallback: () {
-                    debugPrint('movie ${movie.posterPath}');
-                    onTap?.call(movie);
-                  },
-                  imageUrl: tmdbImageSizeW92Url + movie.posterPath!,
-                ),
-              )
-              .toList(),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Wrap(
+            spacing: 16,
+            runSpacing: 8,
+            children: movies.value!
+                .map(
+                  (movie) => AutoSizeNetworkImageCard(
+                    borderRadius: 8,
+                    fit: BoxFit.cover,
+                    clickCallback: () {
+                      debugPrint('movie ${movie.posterPath}');
+                      onTap?.call(movie);
+                    },
+                    imageUrl: tmdbImageSizeW92Url + movie.posterPath!,
+                  ),
+                )
+                .toList(),
+          ),
         )
       else
         const Center(
