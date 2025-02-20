@@ -12,6 +12,7 @@ import 'package:warung_bioskop/presentation/pages/main_page/main_page.dart';
 import 'package:warung_bioskop/presentation/pages/register_page/register_page.dart';
 import 'package:warung_bioskop/presentation/pages/seat_booking_page/seat_booking_page.dart';
 import 'package:warung_bioskop/presentation/pages/time_booking_page/time_booking_page.dart';
+import 'package:warung_bioskop/presentation/pages/wallet_page/wallet_page.dart';
 
 part 'router_provider.g.dart';
 
@@ -59,6 +60,11 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
           builder: (context, state) => BookingConfirmationPage(
             transactionDetail: state.extra as (MovieDetail, Transaction),
           ),
+        ),
+        GoRoute(
+          path: '/${RouterName.myWallet}',
+          name: RouterName.myWallet,
+          builder: (context, state) => const WalletPage(),
         ),
       ],
       initialLocation: '/${RouterName.login}',

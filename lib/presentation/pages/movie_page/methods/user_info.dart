@@ -5,7 +5,10 @@ import 'package:warung_bioskop/presentation/extensions/int_extension.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_info.dart';
 
-Widget userInfo(User? user) {
+Widget userInfo({
+  User? user,
+  required VoidCallback walletOnTap,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -31,18 +34,21 @@ Widget userInfo(User? user) {
             ),
           ),
           verticalSpace(2),
-          Row(
-            children: [
-              const Icon(Icons.wallet),
-              horizontalSpace(4),
-              Text(
-                getBalanceFormat(user?.balance),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: walletOnTap,
+            child: Row(
+              children: [
+                const Icon(Icons.wallet),
+                horizontalSpace(4),
+                Text(
+                  getBalanceFormat(user?.balance),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       )

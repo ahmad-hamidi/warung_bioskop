@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
+import 'package:warung_bioskop/presentation/misc/router_name.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_info.dart';
 import 'package:warung_bioskop/presentation/pages/profile_page/profile_item.dart';
+import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/providers/user_data/user_data_provider.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -45,7 +47,9 @@ class ProfilePage extends ConsumerWidget {
           verticalSpace(16),
           profileItem('Update Profile', () {}),
           verticalSpace(16),
-          profileItem('My Wallet', () {}),
+          profileItem('My Wallet', () {
+            ref.read(routerProvider).pushNamed(RouterName.myWallet);
+          }),
           verticalSpace(16),
           profileItem('Change Password', () {}),
           verticalSpace(16),

@@ -26,7 +26,11 @@ class MoviePage extends ConsumerWidget {
 
     return ListView(
       children: [
-        userInfo(userModel),
+        userInfo(
+          user: userModel,
+          walletOnTap: () =>
+              ref.read(routerProvider).pushNamed(RouterName.myWallet),
+        ),
         verticalSpace(20),
         searchBar(context),
         verticalSpace(20),

@@ -6,4 +6,5 @@ class RouterName {
   static const String timeBooking = "time-booking";
   static const String seatBooking = "seat-booking";
   static const String bookingConfirmation = "booking-confirmation";
+  static const String myWallet = "my-wallet";
 }

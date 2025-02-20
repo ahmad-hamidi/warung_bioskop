@@ -10,3 +10,4 @@ const String tmdbImageSizeW342Url = 'https://image.tmdb.org/t/p/w342';
 const String tmdbImageSizeW500Url = 'https://image.tmdb.org/t/p/w500';
 const String tmdbImageSizeW780Url = 'https://image.tmdb.org/t/p/w780';
 const String tmdbImageSizeOriginalUrl = 'https://image.tmdb.org/t/p/original';
+const String topupKey = 'Top up';

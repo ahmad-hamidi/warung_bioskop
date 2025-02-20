@@ -6,6 +6,7 @@ import 'package:warung_bioskop/domain/usecases/create_transaction/create_transac
 import 'package:warung_bioskop/domain/usecases/create_transaction/create_transaction_param.dart';
 import 'package:warung_bioskop/domain/usecases/topup/topup_param.dart';
 import 'package:warung_bioskop/domain/usecases/usecase.dart';
+import 'package:warung_bioskop/presentation/misc/constants.dart';
 
 class Topup implements UseCase<Result<void>, TopupParam> {
   final TransactionRepository transactionRepository;
@@ -28,7 +29,7 @@ class Topup implements UseCase<Result<void>, TopupParam> {
         transaction: Transaction(
             id: 'flxtp-$currentTime-${params.userId}',
             uid: params.userId,
-            title: 'Top up',
+            title: topupKey,
             adminFee: 0,
             total: -params.amount,
             transactionTime: currentTime),
