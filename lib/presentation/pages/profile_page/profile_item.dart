@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget profileItem(String title, VoidCallback click) {
   return GestureDetector(
+    behavior: HitTestBehavior.opaque,
     onTap: click,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -35,10 +35,8 @@ class _MainPageState extends ConsumerState<MainPage> {
 
     ref.listen(redirectionTicketPageProvider, (previous, next) {
       if (next is AsyncData && next.value == true) {
-        pageController.animateToPage(
+        pageController.jumpToPage(
           1,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInBack,
         );
       }
     });
@@ -91,11 +89,8 @@ class _MainPageState extends ConsumerState<MainPage> {
             ],
             selectedIndex: selectedPage,
             onTap: (index) {
-              selectedPage = index;
-              pageController.animateToPage(
-                selectedPage,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeInBack,
+              pageController.jumpToPage(
+                index,
               );
             },
           )
