@@ -1,27 +1,55 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/io.dart';
+import 'package:hive/hive.dart';
+
 import 'package:warung_bioskop/data/repositories/movie_repository.dart';
 import 'package:warung_bioskop/domain/entities/actor.dart';
 import 'package:warung_bioskop/domain/entities/movie.dart';
 import 'package:warung_bioskop/domain/entities/movie_detail.dart';
 import 'package:warung_bioskop/domain/entities/result.dart';
+import 'package:warung_bioskop/main.dart';
 import 'package:warung_bioskop/presentation/misc/AESHelper.dart';
+import 'package:warung_bioskop/presentation/misc/constants.dart';
 
 class TmdbRepository implements MovieRepository {
   final Dio? dio;
-  final String accessToken =
-      Aeshelper().decryptText('${dotenv.env['TMBD_TOKEN']}');
-
-  late final options = Options(headers: {
-    'Authorization': 'Bearer $accessToken',
-    'accept': 'application/json'
-  });
 
   TmdbRepository({Dio? d}) : dio = d ?? Dio();
+
+  void setDioProxy() {
+    // (dio?.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+    //   final HttpClient client = HttpClient();
+    //   client.findProxy = (uri) {
+    //     return "PROXY xxx.xxx.xxx:8888;";
+    //   };
+    //   return client;
+    // };
+  }
+
+  Future<Options> getOptions() async {
+    Uint8List key = padKeyTo32Bytes(shortKey);
+
+    Uint8List secret = base64Decode(base64Encode(key));
+
+    var encryptedBox =
+        await Hive.openBox(keyBox, encryptionCipher: HiveAesCipher(secret));
+
+    return Options(headers: {
+      'Authorization':
+          'Bearer ${Aeshelper(ivKey: encryptedBox.get(ivKey), aesKey: encryptedBox.get(encryptionKey)).decryptText(encryptedBox.get(tmdbToken))}',
+      'accept': 'application/json'
+    });
+  }
 
   @override
   Future<Result<List<Actor>>> getActors({required int id}) async {
     try {
+      setDioProxy();
+      final options = await getOptions();
       final response = await dio?.get(
           'https://api.themoviedb.org/3/movie/$id/credits',
           options: options);
@@ -40,6 +68,8 @@ class TmdbRepository implements MovieRepository {
   @override
   Future<Result<MovieDetail>> getDetail({required int id}) async {
     try {
+      setDioProxy();
+      final options = await getOptions();
       final response = await dio?.get('https://api.themoviedb.org/3/movie/$id',
           options: options);
 
@@ -64,6 +94,8 @@ class TmdbRepository implements MovieRepository {
   Future<Result<List<Movie>>> _getMovies(String category,
       {int page = 1}) async {
     try {
+      setDioProxy();
+      final options = await getOptions();
       final response = await dio?.get(
           'https://api.themoviedb.org/3/movie/$category?page=$page',
           options: options);

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:warung_bioskop/main.dart';
+import 'package:warung_bioskop/presentation/misc/ssl_pinning.dart';
 
 Widget searchBar(BuildContext context) {
   return Row(
@@ -27,7 +29,15 @@ Widget searchBar(BuildContext context) {
         width: 80,
         height: 50,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            // try {
+            //   SecureHttpClient secureHttpClient = SecureHttpClient();
+            //   String configData = await secureHttpClient.fetchRemoteConfig();
+            //   debugPrint("Secure Config Data: $configData");
+            // } catch (e) {
+            //   debugPrint("Error: $e");
+            // }
+          },
           style: ButtonStyle(
             shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
               RoundedRectangleBorder(

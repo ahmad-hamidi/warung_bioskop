@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/pages/wallet_page/methods/wallet_card.dart';
+import 'package:warung_bioskop/presentation/providers/router/router_provider.dart';
 import 'package:warung_bioskop/presentation/widgets/back_navigation_bar_widget.dart';
 
 class NavBarWidget extends StatefulWidget implements PreferredSizeWidget {
@@ -29,7 +30,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             children: [
               BackNavigationBarWidget(
                 title: 'My Wallet',
-                clickListener: () {},
+                clickListener: () {
+                  widget.ref.read(routerProvider).pop();
+                },
               ),
               verticalSpace(10),
               walletCard(widget.ref),
