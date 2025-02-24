@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
 import 'package:warung_bioskop/presentation/misc/methods.dart';
 import 'package:warung_bioskop/presentation/misc/router_name.dart';
@@ -23,12 +26,14 @@ class _RegisterPageState extends ConsumerState<RegsiterPage> {
   final TextEditingController retypePasswordController =
       TextEditingController();
 
+  XFile? xFile;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(userDataProvider, (previous, next) {
-      debugPrint('register page next: $next previous: $previous');
       if (next is AsyncData && next.value != null) {
-        ref.read(routerProvider).goNamed(RouterName.main);
+        ref.read(routerProvider).goNamed(RouterName.main,
+            extra: xFile != null ? File(xFile!.path) : null);
       } else if (next is AsyncError) {
         context.showSnackBar(next.error.toString());
       }
@@ -40,11 +45,23 @@ class _RegisterPageState extends ConsumerState<RegsiterPage> {
           verticalSpace(50),
           Column(
             children: [
-              const CircleAvatar(
-                radius: 50,
-                child: Icon(
-                  Icons.add_a_photo,
-                  size: 50,
+              GestureDetector(
+                onTap: () async {
+                  xFile = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
+
+                  setState(() {});
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage:
+                      xFile != null ? FileImage(File(xFile!.path)) : null,
+                  child: xFile != null
+                      ? null
+                      : const Icon(
+                          Icons.add_a_photo,
+                          size: 50,
+                        ),
                 ),
               ),
               verticalSpace(24),

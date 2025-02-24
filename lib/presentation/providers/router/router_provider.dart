@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,7 +24,9 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
         GoRoute(
           path: '/${RouterName.main}',
           name: RouterName.main,
-          builder: (context, state) => const MainPage(),
+          builder: (context, state) => MainPage(
+            imageFile: state.extra != null ? state.extra as File : null,
+          ),
         ),
         GoRoute(
           path: '/${RouterName.login}',

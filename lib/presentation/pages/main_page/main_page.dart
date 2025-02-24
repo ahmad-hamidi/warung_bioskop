@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warung_bioskop/presentation/extensions/build_context_extension.dart';
@@ -13,7 +15,8 @@ import 'package:warung_bioskop/presentation/widgets/bottom_nav_bar.dart';
 import 'package:warung_bioskop/presentation/widgets/bottom_nav_bar_item.dart';
 
 class MainPage extends ConsumerStatefulWidget {
-  const MainPage({super.key});
+  final File? imageFile;
+  const MainPage({this.imageFile, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainPageState();
@@ -24,10 +27,21 @@ class _MainPageState extends ConsumerState<MainPage> {
   int selectedPage = 0;
 
   @override
+  void initState() {
+    super.initState();
+    final user = ref.read(userDataProvider).valueOrNull;
+    if (widget.imageFile != null && user != null) {
+      ref
+          .read(userDataProvider.notifier)
+          .uploadProfilePicture(user: user, file: widget.imageFile!);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.listen(userDataProvider, (previous, next) {
       if (previous != null && next is AsyncData && next.value == null) {
-        ref.read(routerProvider).goNamed(RouterName.main);
+        ref.read(routerProvider).goNamed(RouterName.login);
       } else if (next is AsyncError) {
         context.showSnackBar(next.error.toString());
       }
