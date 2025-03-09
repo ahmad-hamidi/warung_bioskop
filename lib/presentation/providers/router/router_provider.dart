@@ -13,6 +13,7 @@ import 'package:warung_bioskop/presentation/pages/login_page/login_page.dart';
 import 'package:warung_bioskop/presentation/pages/main_page/main_page.dart';
 import 'package:warung_bioskop/presentation/pages/register_page/register_page.dart';
 import 'package:warung_bioskop/presentation/pages/seat_booking_page/seat_booking_page.dart';
+import 'package:warung_bioskop/presentation/pages/splash_screen/splash_screen.dart';
 import 'package:warung_bioskop/presentation/pages/time_booking_page/time_booking_page.dart';
 import 'package:warung_bioskop/presentation/pages/wallet_page/wallet_page.dart';
 
@@ -70,7 +71,12 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
           name: RouterName.myWallet,
           builder: (context, state) => const WalletPage(),
         ),
+        GoRoute(
+          path: '/${RouterName.splashScreen}',
+          name: RouterName.splashScreen,
+          builder: (context, state) => const SplashScreen(),
+        ),
       ],
-      initialLocation: '/${RouterName.login}',
+      initialLocation: '/${RouterName.splashScreen}',
       debugLogDiagnostics: true,
     );

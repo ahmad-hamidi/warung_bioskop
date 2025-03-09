@@ -63,19 +63,19 @@ class LoginPage extends ConsumerWidget {
                   isObscureText: true,
                 ),
               ),
-              verticalSpace(16),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Forgot Password',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              // verticalSpace(16),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: TextButton(
+              //     onPressed: () {},
+              //     child: const Text(
+              //       'Forgot Password',
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               verticalSpace(16),
               ref.watch(userDataProvider).when(data: (user) {
                 return ElevatedButton(

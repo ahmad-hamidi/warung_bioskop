@@ -55,7 +55,7 @@ class _SeatBookingPageState extends ConsumerState<SeatBookingPage> {
               children: [
                 BackNavigationBarWidget(
                   title: movieDetail.title,
-                  clickListener: () => ref.read(routerProvider).pop,
+                  clickListener: () => ref.read(routerProvider).pop(),
                 ),
                 movieScreen(),
                 verticalSpace(24),

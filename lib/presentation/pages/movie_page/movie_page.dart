@@ -31,8 +31,8 @@ class MoviePage extends ConsumerWidget {
           walletOnTap: () =>
               ref.read(routerProvider).pushNamed(RouterName.myWallet),
         ),
-        verticalSpace(20),
-        searchBar(context),
+        //verticalSpace(20),
+        //searchBar(context),
         verticalSpace(20),
         ...movieList(
           title: 'Now Playing',

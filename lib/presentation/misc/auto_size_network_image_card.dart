@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AutoSizeNetworkImageCard extends StatefulWidget {
@@ -35,11 +36,17 @@ class AutoSizeNetworkImageCardState extends State<AutoSizeNetworkImageCard> {
     final Image image = Image.network(url);
     final Completer<Size> completer = Completer();
     image.image.resolve(const ImageConfiguration()).addListener(
-      ImageStreamListener((ImageInfo info, bool _) {
-        completer.complete(
-            Size(info.image.width.toDouble(), info.image.height.toDouble()));
-      }),
-    );
+          ImageStreamListener(
+            (ImageInfo info, bool isLoad) {
+              completer.complete(
+                Size(info.image.width.toDouble(), info.image.height.toDouble()),
+              );
+            },
+            onError: (error, stackTrace) {
+              completer.complete(const Size(100, 100)); // Default fallback size
+            },
+          ),
+        );
 
     Size size = await completer.future;
     if (mounted) {
@@ -52,20 +59,21 @@ class AutoSizeNetworkImageCardState extends State<AutoSizeNetworkImageCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (imageWidth == null || imageHeight == null) {
-      return const Center(
-          child: CircularProgressIndicator()); // Loading indicator
-    }
-
     return GestureDetector(
       onTap: widget.clickCallback,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(widget.borderRadius),
-        child: Image.network(
-          widget.imageUrl,
+        child: CachedNetworkImage(
+          imageUrl: widget.imageUrl,
           width: imageWidth,
           height: imageHeight,
           fit: widget.fit,
+          placeholder: (context, url) =>
+              const Icon(Icons.photo, size: 50, color: Colors.grey),
+          errorWidget: (context, url, error) => const Icon(Icons.photo,
+              size: 50, color: Colors.red), // Error fallback
+          memCacheWidth: imageWidth?.toInt(),
+          memCacheHeight: imageHeight?.toInt(),
         ),
       ),
     );
