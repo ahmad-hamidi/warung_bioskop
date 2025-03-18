@@ -39,7 +39,7 @@ List<Widget> movieList({
                       debugPrint('movie ${movie.posterPath}');
                       onTap?.call(movie);
                     },
-                    imageUrl: tmdbImageSizeW92Url + movie.posterPath!,
+                    imageUrl: tmdbImageSizeW92Url + (movie.posterPath ?? ''),
                   ),
                 )
                 .toList(),
@@ -92,8 +92,8 @@ List<Widget> movieList2({
                                 debugPrint('movie ${movie.posterPath}');
                                 onTap?.call(movie);
                               },
-                              imageUrl:
-                                  tmdbImageSizeW154Url + movie.posterPath!,
+                              imageUrl: tmdbImageSizeW154Url +
+                                  (movie.posterPath ?? ''),
                             ),
                           ),
                         )

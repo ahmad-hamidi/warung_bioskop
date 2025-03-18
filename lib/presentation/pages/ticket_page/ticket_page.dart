@@ -16,7 +16,7 @@ class TicketPage extends ConsumerWidget {
                   (element) =>
                       element.title != topupKey &&
                       DateTime.now().microsecondsSinceEpoch >=
-                          element.watchingTime!,
+                          (element.watchingTime ?? 0),
                 )
                 .toList()
               ..sort(

@@ -21,7 +21,9 @@ class RegisterUsecase implements UseCase<Result<User>, RegisterParams> {
 
     if (uidResult.isSuccess) {
       final result = await userRepository.createUser(
-          uid: uidResult.resultValue!, email: params.email, name: params.name);
+          uid: uidResult.resultValue ?? '',
+          email: params.email,
+          name: params.name);
 
       if (result.isSuccess) {
         return Result.success(result.resultValue!);

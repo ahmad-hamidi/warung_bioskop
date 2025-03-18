@@ -35,7 +35,7 @@ class NetworkImageCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(borderRadius),
                   child: Image.network(
-                    imageUrl!,
+                    imageUrl ?? '',
                     fit: fit,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent? loadingProgress) {

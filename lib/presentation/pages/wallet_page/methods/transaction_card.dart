@@ -53,7 +53,8 @@ class TransactionCard extends StatelessWidget {
                   Text(
                     DateFormat('EEEE, d MMMM y HH:mm:ss').format(
                       DateTime.fromMillisecondsSinceEpoch(
-                        transaction.transactionTime!,
+                        transaction.transactionTime ??
+                            DateTime.now().millisecondsSinceEpoch,
                       ),
                     ),
                     style: const TextStyle(
