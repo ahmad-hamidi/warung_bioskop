@@ -1,7 +1,7 @@
 name: warung_bioskop
 description: "Warung Bioskop is provide movie list and ticketing simulation"
 
-version: 1.32.2+2
+version: 2.0.0
 
 environment:
   sdk: ^3.5.3
